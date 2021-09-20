@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ebcx42!^7z%0nz$g5%d!@3c!vj5l&+q9gm$%0!l6+dc_z_4rh9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '.vercel.app' ]
+ALLOWED_HOSTS = ['vercel.app']
 
 CORS_ALLOWED_ORIGINS  = [    
      "http://localhost:3000" ,
@@ -139,3 +139,4 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
