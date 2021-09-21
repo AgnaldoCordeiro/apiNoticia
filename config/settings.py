@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import dotenv
 import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,8 +22,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+
+# Add .env variables anywhere before SECRET_KEY
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ['SECRET_KEY'] # Instead of your actual secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -147,42 +154,4 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-django_heroku.settings(config=locals(), staticfiles=False,logging=False),logging=False
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': ('%(asctime)s [%(process)d] [%(levelname)s] '
-                       'pathname=%(pathname)s lineno=%(lineno)s '
-                       'funcname=%(funcName)s %(message)s'),
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        }
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    }
-}
+django_heroku.settings(locals())
